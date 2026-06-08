@@ -182,6 +182,18 @@ app.use((req, res) => {
 // ─── Global Error Handler (must be last) ────────────────────────────────────────
 app.use(errorHandler);
 
+// ─── Keep-alive ping (Render free tier — prevents sleep) ────────────────────────
+if (process.env.NODE_ENV === 'production' && process.env.RENDER_URL) {
+  setInterval(async () => {
+    try {
+      const https = require('https')
+      https.get(process.env.RENDER_URL + '/api/health', (res) => {
+        console.log('🏓 Keep-alive ping sent')
+      }).on('error', () => {})
+    } catch (e) {}
+  }, 14 * 60 * 1000) // every 14 minutes
+}
+
 // ─── Startup ─────────────────────────────────────────────────────────────────────
 async function startServer() {
   try {
