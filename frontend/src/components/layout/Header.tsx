@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Settings } from 'lucide-react'
-import { API_BASE_URL } from '../../api/client'
 
 interface HeaderProps {
   title: string;
@@ -132,71 +131,6 @@ export default function Header({ title, onHamburgerClick }: HeaderProps) {
                   style={{ background: '#1B4F8A', color: 'white', border: 'none', borderRadius: '8px', padding: '8px 20px', fontSize: '14px', cursor: 'pointer' }}
                 >Save Key</button>
               </div>
-
-              <div>
-  <p style={{ fontSize: '11px', fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>
-    📱 Alert Settings
-  </p>
-
-  <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '16px', lineHeight: 1.6 }}>
-    Get instant free alerts on WhatsApp and Telegram when properties are registered or fraud is detected.
-  </p>
-
-  <p style={{ fontSize: '12px', fontWeight: 600, color: '#374151', marginBottom: '8px' }}>WhatsApp (via CallMeBot — Free)</p>
-  <input
-    id="callmebot-phone"
-    type="tel"
-    placeholder="919876543210 (91 + number)"
-    style={{ width: '100%', height: '40px', border: '1px solid #D1D5DB', borderRadius: '8px', padding: '0 12px', fontSize: '14px', marginBottom: '6px' }}
-  />
-  <input
-    id="callmebot-key"
-    type="text"
-    placeholder="CallMeBot API Key"
-    style={{ width: '100%', height: '40px', border: '1px solid #D1D5DB', borderRadius: '8px', padding: '0 12px', fontSize: '14px', marginBottom: '4px' }}
-  />
-  <p style={{ fontSize: '11px', color: '#94A3B8', marginBottom: '16px' }}>
-    Setup: Send "I allow callmebot to send me messages" to +34 644 44 26 07 on WhatsApp → they reply with your API key
-  </p>
-
-  <p style={{ fontSize: '12px', fontWeight: 600, color: '#374151', marginBottom: '8px' }}>Telegram (Free, Unlimited)</p>
-  <input
-    id="telegram-token"
-    type="text"
-    placeholder="Telegram Bot Token"
-    style={{ width: '100%', height: '40px', border: '1px solid #D1D5DB', borderRadius: '8px', padding: '0 12px', fontSize: '14px', marginBottom: '6px' }}
-  />
-  <input
-    id="telegram-chat"
-    type="text"
-    placeholder="Telegram Chat ID"
-    style={{ width: '100%', height: '40px', border: '1px solid #D1D5DB', borderRadius: '8px', padding: '0 12px', fontSize: '14px', marginBottom: '4px' }}
-  />
-  <p style={{ fontSize: '11px', color: '#94A3B8', marginBottom: '16px' }}>
-    Setup: Message @BotFather on Telegram → /newbot → get token. Then message @userinfobot to get your Chat ID.
-  </p>
-
-  <div style={{ display: 'flex', gap: '8px' }}>
-    <button
-      onClick={() => {
-        localStorage.setItem('callmebot_phone', (document.getElementById('callmebot-phone') as HTMLInputElement).value)
-        localStorage.setItem('callmebot_key', (document.getElementById('callmebot-key') as HTMLInputElement).value)
-        localStorage.setItem('telegram_token', (document.getElementById('telegram-token') as HTMLInputElement).value)
-        localStorage.setItem('telegram_chat', (document.getElementById('telegram-chat') as HTMLInputElement).value)
-        alert('Alert settings saved!')
-      }}
-      style={{ flex: 1, background: '#1B4F8A', color: 'white', border: 'none', borderRadius: '8px', padding: '10px', fontSize: '13px', cursor: 'pointer' }}
-    >Save Settings</button>
-    <button
-      onClick={async () => {
-        const res = await fetch(`${API_BASE_URL}/api/test-alert`, { method: 'POST' })
-        const data = await res.json()
-        alert(`Test Alert Sent!\n\nWhatsApp: ${data.result?.whatsapp?.success ? '✅ Delivered' : '❌ Failed — ' + (data.result?.whatsapp?.reason || data.result?.whatsapp?.error || 'Not configured')}\nTelegram: ${data.result?.telegram?.success ? '✅ Delivered' : '❌ Failed — ' + (data.result?.telegram?.reason || data.result?.telegram?.error || 'Not configured')}`)
-      }}
-      style={{ flex: 1, background: '#16A34A', color: 'white', border: 'none', borderRadius: '8px', padding: '10px', fontSize: '13px', cursor: 'pointer' }}
-    >🔔 Test Alert</button>
-  </div>
-</div>
 
               <div>
                 <p style={{ fontSize: '11px', fontWeight: 600, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>Blockchain</p>

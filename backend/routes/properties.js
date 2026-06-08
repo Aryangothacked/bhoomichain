@@ -117,14 +117,6 @@ router.post(
           pan,
         }, fraudResult.alerts);
 
-        const { sendPropertyAlert } = require('../services/notifications')
-        sendPropertyAlert('FRAUD_REJECTED', {
-          ownerName: req.body.ownerName,
-          city: req.body.city,
-          declaredValue: req.body.declaredValue,
-          rejectionReason: fraudResult.alerts.join(' | ')
-        }).catch(err => console.error('Fraud alert failed silently:', err.message))
-
         return res.status(422).json({
           success: false,
           approved: false,
@@ -165,18 +157,6 @@ router.post(
       };
 
       const block = await blockchain.addBlock(blockData);
-
-      const { sendPropertyAlert } = require('../services/notifications')
-      sendPropertyAlert('REGISTRATION', {
-        propertyId: block.data.propertyId,
-        ownerName: block.data.ownerName,
-        city: block.data.city,
-        propertyType: block.data.propertyType,
-        area: block.data.area,
-        declaredValue: block.data.declaredValue,
-        stampDuty: block.data.stampDuty,
-        blockNumber: block.blockNumber
-      }).catch(err => console.error('Alert send failed silently:', err.message))
 
       return res.status(201).json({
         success: true,

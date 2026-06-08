@@ -95,25 +95,7 @@ app.post('/api/reset-demo', async (req, res) => {
   }
 });
 
-// ─── Test Alert Route ───────────────────────────────────────────────────────────
-app.post('/api/test-alert', async (req, res) => {
-  try {
-    const { sendPropertyAlert } = require('./services/notifications')
-    const result = await sendPropertyAlert('REGISTRATION', {
-      propertyId: 'BHC-TEST-0001',
-      ownerName: 'Test Owner',
-      city: 'Mumbai',
-      propertyType: 'residential',
-      area: 1000,
-      declaredValue: 10000000,
-      stampDuty: 500000,
-      blockNumber: 99
-    })
-    res.json({ success: true, result })
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message })
-  }
-})
+
 
 // ─── Dashboard Stats (with Cache) ───────────────────────────────────────────
 let dashboardCache = null

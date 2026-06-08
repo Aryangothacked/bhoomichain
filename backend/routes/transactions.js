@@ -98,16 +98,6 @@ router.post('/add', addTransactionRules, handleValidationErrors, async (req, res
 
     const newBlock = await blockchain.addBlock(blockData);
 
-    const { sendPropertyAlert } = require('../services/notifications')
-
-    sendPropertyAlert(req.body.eventType || 'REGISTRATION', {
-      propertyId: req.body.propertyId,
-      newOwner: req.body.newOwner || '',
-      city: latestBlock?.data?.city || '',
-      declaredValue: req.body.newValue || 0,
-      notes: req.body.notes || ''
-    }).catch(err => console.error('Transaction alert failed silently:', err.message))
-
     res.status(201).json({
       success: true,
       message: `${eventType} transaction mined in Block #${newBlock.blockNumber}.`,
