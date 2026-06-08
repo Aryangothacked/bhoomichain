@@ -12,6 +12,7 @@ import Ledger from './pages/Ledger';
 import FraudDetection from './pages/FraudDetection';
 import ReitPortal from './pages/ReitPortal';
 import Calculator from './pages/Calculator';
+import PriceTrends from './pages/PriceTrends';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/fraud" element={<FraudDetection />} />
                 <Route path="/reit" element={<ReitPortal />} />
                 <Route path="/calculator" element={<Calculator />} />
+                <Route path="/trends" element={<PriceTrends />} />
               </Routes>
             </Layout>
           </Router>
