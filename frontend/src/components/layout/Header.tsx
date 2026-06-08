@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Settings } from 'lucide-react'
+import { API_BASE_URL } from '../../api/client'
 
 interface HeaderProps {
   title: string;
@@ -188,7 +189,7 @@ export default function Header({ title, onHamburgerClick }: HeaderProps) {
     >Save Settings</button>
     <button
       onClick={async () => {
-        const res = await fetch('http://localhost:3001/api/test-alert', { method: 'POST' })
+        const res = await fetch(`${API_BASE_URL}/api/test-alert`, { method: 'POST' })
         const data = await res.json()
         alert(`Test Alert Sent!\n\nWhatsApp: ${data.result?.whatsapp?.success ? '✅ Delivered' : '❌ Failed — ' + (data.result?.whatsapp?.reason || data.result?.whatsapp?.error || 'Not configured')}\nTelegram: ${data.result?.telegram?.success ? '✅ Delivered' : '❌ Failed — ' + (data.result?.telegram?.reason || data.result?.telegram?.error || 'Not configured')}`)
       }}
@@ -203,7 +204,7 @@ export default function Header({ title, onHamburgerClick }: HeaderProps) {
                   <button
                     onClick={() => {
                       if (window.confirm('Reset all demo data? This cannot be undone.')) {
-                        fetch('http://localhost:3001/api/reset-demo', { method: 'POST' })
+                        fetch(`${API_BASE_URL}/api/reset-demo`, { method: 'POST' })
                           .then(() => window.location.reload())
                           .catch(() => alert('Reset failed. Check backend.'))
                       }
@@ -211,7 +212,7 @@ export default function Header({ title, onHamburgerClick }: HeaderProps) {
                     style={{ background: 'none', border: '1px solid #DC2626', color: '#DC2626', borderRadius: '8px', padding: '10px 16px', fontSize: '14px', cursor: 'pointer', textAlign: 'left' }}
                   >🔄  Reset Demo Data</button>
                   <button
-                    onClick={() => window.open('http://localhost:3001/api/ledger?export=true', '_blank')}
+                    onClick={() => window.open(`${API_BASE_URL}/api/ledger?export=true`, '_blank')}
                     style={{ background: 'none', border: '1px solid #1B4F8A', color: '#1B4F8A', borderRadius: '8px', padding: '10px 16px', fontSize: '14px', cursor: 'pointer', textAlign: 'left' }}
                   >⬇️  Export Full Ledger (JSON)</button>
                 </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../api/client';
 import PropertyMap from '../components/property/PropertyMap';
 import { CityBarChart } from '../components/charts/CityBarChart';
 import { formatCrore } from '../utils/formatters';
@@ -24,7 +25,7 @@ export default function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/dashboard/stats', {
+      const response = await axios.get(`${API_BASE_URL}/api/dashboard/stats`, {
         timeout: 15000
       });
       
@@ -53,7 +54,7 @@ export default function Dashboard() {
     fetchStats();
     const interval = setInterval(fetchStats, 30000);
     
-    axios.get('http://localhost:3001/api/properties').then(res => {
+    axios.get(`${API_BASE_URL}/api/properties`).then(res => {
       setMapProperties(res.data.properties || []);
     }).catch(console.error);
 
@@ -85,7 +86,7 @@ export default function Dashboard() {
           <div style={{ fontSize: '32px', marginBottom: '12px' }}>⚠️</div>
           <h3 style={{ color: '#DC2626', marginBottom: '8px' }}>Dashboard failed to load</h3>
           <p style={{ color: '#64748B', marginBottom: '16px' }}>{error}</p>
-          <p style={{ color: '#94A3B8', fontSize: '13px', marginBottom: '16px' }}>Make sure backend is running at http://localhost:3001</p>
+          <p style={{ color: '#94A3B8', fontSize: '13px', marginBottom: '16px' }}>Make sure backend is running at {API_BASE_URL}</p>
           <button
             onClick={() => { setLoading(true); fetchStats() }}
             style={{ background: '#1B4F8A', color: 'white', border: 'none', borderRadius: '8px', padding: '10px 24px', cursor: 'pointer', fontSize: '14px' }}

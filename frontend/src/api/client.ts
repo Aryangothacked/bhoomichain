@@ -1,10 +1,14 @@
-import axios from 'axios';
+import axios from 'axios'
 
-const client = axios.create({
-  baseURL: 'http://localhost:3001/api',
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
+const apiClient = axios.create({
+  baseURL: `${API_BASE_URL}/api`,
+  timeout: 15000,
   headers: {
-    'Content-Type': 'application/json',
-  },
-});
+    'Content-Type': 'application/json'
+  }
+})
 
-export default client;
+export default apiClient
+export { API_BASE_URL }

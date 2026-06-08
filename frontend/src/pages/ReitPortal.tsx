@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { API_BASE_URL } from '../api/client'
 
 export default function ReitPortal() {
   const [properties, setProperties] = useState<any[]>([])
@@ -24,7 +25,7 @@ export default function ReitPortal() {
       if (propertyType && propertyType !== 'All Types') params.append('type', propertyType)
       if (minArea) params.append('minArea', minArea)
 
-      const res = await axios.get(`http://localhost:3001/api/reit/properties?${params.toString()}`, { timeout: 15000 })
+      const res = await axios.get(`${API_BASE_URL}/api/reit/properties?${params.toString()}`, { timeout: 15000 })
       const data = res.data
       const props = data.properties || data || []
       setProperties(Array.isArray(props) ? props : [])
@@ -39,7 +40,7 @@ export default function ReitPortal() {
   const generateDD = async (propertyId: string) => {
     try {
       setDdLoading(propertyId)
-      const res = await axios.post('http://localhost:3001/api/reit/due-diligence', { propertyId }, { timeout: 30000 })
+      const res = await axios.post(`${API_BASE_URL}/api/reit/due-diligence`, { propertyId }, { timeout: 30000 })
       const report = res.data.report || JSON.stringify(res.data, null, 2)
       setDdReports(prev => ({ ...prev, [propertyId]: typeof report === 'string' ? report : JSON.stringify(report, null, 2) }))
     } catch (err: any) {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import client from '../api/client';
+import client, { API_BASE_URL } from '../api/client';
 import type { DashboardStats } from '../types';
 
 export function useChain() {
@@ -31,7 +31,7 @@ export function useChain() {
   useEffect(() => {
     const checkHealth = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/health', { timeout: 5000 })
+        const res = await axios.get(`${API_BASE_URL}/api/health`, { timeout: 5000 })
         if (res.data && (res.data.status === 'ok' || res.data.chainValid !== undefined)) {
           setIsChainHealthy(true)
         } else {
