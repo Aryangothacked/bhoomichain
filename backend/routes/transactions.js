@@ -21,18 +21,7 @@ router.get('/ledger', async (req, res, next) => {
     const chain = await blockchain.getAllBlocks();
     const validation = await blockchain.validateChain();
 
-    if (req.query.export === 'true') {
-      const filename = `bhoomichain_ledger_${new Date().toISOString().slice(0, 10)}.json`;
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-      res.setHeader('Content-Type', 'application/json');
-      return res.send(JSON.stringify(chain, null, 2));
-    }
-
-    res.json({
-      chainLength: chain.length,
-      chainValid: validation.valid,
-      validationMessage: validation.message,
-      corruptedBlock: validation.corruptedBlock || null,
+    const response = {
       chain: chain.map((block) => ({
         blockNumber: block.blockNumber,
         hash: block.hash,
@@ -40,7 +29,19 @@ router.get('/ledger', async (req, res, next) => {
         timestamp: block.timestamp,
         data: block.data
       })),
-    });
+      totalBlocks: chain.length,
+      chainValid: validation.valid,
+      exportedAt: new Date().toISOString(),
+      network: 'BhoomiChain-MAINNET-Simulated'
+    };
+
+    if (req.query.export === 'true') {
+      const filename = `BhoomiChain_Ledger_${new Date().toISOString().split('T')[0]}.json`;
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Type', 'application/json');
+    }
+
+    res.json(response);
   } catch (err) {
     next(err);
   }

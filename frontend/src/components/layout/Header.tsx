@@ -138,7 +138,8 @@ export default function Header({ title, onHamburgerClick }: HeaderProps) {
                   <button
                     onClick={() => {
                       if (window.confirm('Reset all demo data? This cannot be undone.')) {
-                        fetch(`${API_BASE_URL}/api/reset-demo`, { method: 'POST' })
+                        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+                        fetch(`${apiUrl}/api/reset-demo`, { method: 'POST' })
                           .then(() => window.location.reload())
                           .catch(() => alert('Reset failed. Check backend.'))
                       }
@@ -146,7 +147,24 @@ export default function Header({ title, onHamburgerClick }: HeaderProps) {
                     style={{ background: 'none', border: '1px solid #DC2626', color: '#DC2626', borderRadius: '8px', padding: '10px 16px', fontSize: '14px', cursor: 'pointer', textAlign: 'left' }}
                   >🔄  Reset Demo Data</button>
                   <button
-                    onClick={() => window.open(`${API_BASE_URL}/api/ledger?export=true`, '_blank')}
+                    onClick={async () => {
+                      try {
+                        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+                        const response = await fetch(`${apiUrl}/api/ledger?export=true`)
+                        const data = await response.json()
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+                        const url = URL.createObjectURL(blob)
+                        const a = document.createElement('a')
+                        a.href = url
+                        a.download = `BhoomiChain_Ledger_${new Date().toISOString().split('T')[0]}.json`
+                        document.body.appendChild(a)
+                        a.click()
+                        document.body.removeChild(a)
+                        URL.revokeObjectURL(url)
+                      } catch (err) {
+                        alert('Export failed. Make sure backend is running.')
+                      }
+                    }}
                     style={{ background: 'none', border: '1px solid #1B4F8A', color: '#1B4F8A', borderRadius: '8px', padding: '10px 16px', fontSize: '14px', cursor: 'pointer', textAlign: 'left' }}
                   >⬇️  Export Full Ledger (JSON)</button>
                 </div>
