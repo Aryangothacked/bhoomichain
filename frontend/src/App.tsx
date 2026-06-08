@@ -11,6 +11,7 @@ import Search from './pages/Search';
 import Ledger from './pages/Ledger';
 import FraudDetection from './pages/FraudDetection';
 import ReitPortal from './pages/ReitPortal';
+import Calculator from './pages/Calculator';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/ledger" element={<Ledger />} />
                 <Route path="/fraud" element={<FraudDetection />} />
                 <Route path="/reit" element={<ReitPortal />} />
+                <Route path="/calculator" element={<Calculator />} />
               </Routes>
             </Layout>
           </Router>

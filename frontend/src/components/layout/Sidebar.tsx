@@ -8,7 +8,8 @@ import {
   ShieldAlert, 
   Building2,
   Box,
-  X
+  X,
+  Calculator
 } from 'lucide-react';
 import { useChain } from '../../hooks/useChain';
 
@@ -24,6 +25,7 @@ const navItems = [
   { path: '/ledger', label: 'Ledger', icon: Database },
   { path: '/fraud', label: 'Fraud Detection', icon: ShieldAlert },
   { path: '/reit', label: 'REIT Portal', icon: Building2 },
+  { path: '/calculator', label: 'Stamp Calculator', icon: Calculator },
 ];
 
 export const Sidebar = ({ isOpen = true, onClose }: SidebarProps) => {
