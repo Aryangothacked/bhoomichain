@@ -13,6 +13,7 @@ import FraudDetection from './pages/FraudDetection';
 import ReitPortal from './pages/ReitPortal';
 import Calculator from './pages/Calculator';
 import PriceTrends from './pages/PriceTrends';
+import CompareProperties from './pages/CompareProperties';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/reit" element={<ReitPortal />} />
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/trends" element={<PriceTrends />} />
+                <Route path="/compare" element={<CompareProperties />} />
               </Routes>
             </Layout>
           </Router>

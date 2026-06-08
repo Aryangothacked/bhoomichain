@@ -10,7 +10,8 @@ import {
   Box,
   X,
   Calculator,
-  TrendingUp
+  TrendingUp,
+  GitCompare
 } from 'lucide-react';
 import { useChain } from '../../hooks/useChain';
 
@@ -28,6 +29,7 @@ const navItems = [
   { path: '/reit', label: 'REIT Portal', icon: Building2 },
   { path: '/calculator', label: 'Stamp Calculator', icon: Calculator },
   { path: '/trends', label: 'Price Trends', icon: TrendingUp },
+  { path: '/compare', label: 'Compare Properties', icon: GitCompare },
 ];
 
 export const Sidebar = ({ isOpen = true, onClose }: SidebarProps) => {
